@@ -1,0 +1,41 @@
+// Making M to N connection between two tables and declaring Primary key of First table  as Foreign key in other.
+
+// CREATING TABLE STUDENT with SAPID as Primary Key
+
+CREATE TABLE student (
+    SAPID int,
+    FirstName varchar(255),
+    LastName varchar(255),
+    City varchar(255),
+  primary key(SAPID)
+);
+
+
+// INSERTING DATA IN TABLE STUDENT
+
+insert into Student (SAPID,FirstName,LastName,City)
+values
+(1,"OMJI","SHUKLA","KANPUR"),
+(2,"ANJALI","SHARMA","JAIPUR"),
+(3,"DEEPESH","SHING","LUCKNOW");
+
+ 
+
+// CREATING TABLE COURSES with SAPID as Foreign Key
+
+CREATE TABLE Courses (
+    Courseid int,
+    SAPID int,
+    Name varchar(255),
+    foreign key(SAPID) references Student(SAPID)
+);
+
+
+// INSERTING DATA IN TABLE COURSES
+
+insert into Courses (Courseid,SAPID,Name)
+values
+(12,1,"DBMS"),
+(13,1,"PYTHON"),
+(14,2,"OS"),
+(12,3,"JAVA")
