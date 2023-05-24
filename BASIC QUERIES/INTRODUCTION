@@ -1,0 +1,28 @@
+// QUERIES OF CREATING, INSERTING AND ALTERING TABLES 
+- create table accountdetail (id int primary key , first_name varchar(20),last_name varchar(20),account_no int, amount int);
+
+- insert into Accountdetail values(02,'omji','shukla',0000102930789,6000)
+
+- update Accountdetail set amount = 7000 where id =02;
+
+- alter table Accountdetail add column moblie_no
+
+- alter table Accountdetail drop column moblie_no
+
+- update Accountdetail set moblie_no='9450223456' where amount='7000';
+
+- select min (amount) from accountdetail
+
+//QUREIES TO PRINT COUNT, SUM AND AVERAGE OF TOTAL VALUES :
+- select count (amount) from accountdetail
+
+- select sum (amount) from accountdetail
+
+- select avg (amount) from accountdetail
+
+- delete from Accountdetail where id= 02;
+
+ 
+//TO DELETE A TABLE :
+
+- drop table Accountdetail;
