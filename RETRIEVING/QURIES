@@ -1,0 +1,153 @@
+// CREATING TABLE S
+CREATE TABLE S (
+ 
+    SupplyN varchar(255),
+    SNAME varchar(255),
+    STATUS int,
+    CITY varchar(255),
+    PRIMARY KEY (SupplyN)
+
+);
+
+// INSERTING DATA INTO  TABLE S
+INSERT INTO S (SupplyN, SName, STATUS, CITY)
+VALUES ('S1', 'Smith', 20, 'london'),
+('S2', 'Jones', 10, 'paris'),
+('S3', 'Blake', 30, 'paris'),
+('S4', 'Adams', 30, 'athens'),
+('S5', 'Clark', 20, 'london');
+
+ 
+// CREATING TABLE SP1
+CREATE TABLE sp1 (
+ 
+    SupplyN varchar(255),
+    PARTNUM varchar(255),
+    QUANTITY int,
+    FOREIGN KEY (SupplyN) REFERENCES S(SupplyN)
+
+);
+
+
+// INSERTING DATA INTO  TABLE SP1
+INSERT INTO SP1 (SupplyN, partnum, quantity)
+VALUES ('S1','p1',300),
+('S1','p2',200),
+('S2','p1',100),
+('S2','p2',400),
+('S3','p2',200),
+('S4','p2',200);
+
+
+// QUESTION 1 : Get supplier numbers for suppliers with status > 20 and city is Paris.
+select SupplyN
+from S 
+where STATUS>20 and CITY='paris';
+
+ 
+
+// QUESTION 2 : Get Supplier Numbers and status for suppliers in Paris, in descending order of status.
+select SupplyN , 
+STATUS from s order by status DESC;
+
+ 
+
+// QUESTION 3 : Get all pairs of supplier numbers such that the two suppliers are located in the same city. (Hint: It is retrieval involving join of a table with itself.) 
+select 
+A.SName,B.SName,A.CITY from S as A ,S as B 
+where A.CITY=B.CITY and A.SupplyN <> B.SupplyN group by A.CITY ;
+
+ 
+
+// QUESTION 4 : Get unique supplier names for suppliers who supply part P2.
+select SName from S,SP1
+where S.SupplyN=Sp1.SupplyN and SP1.PARTNUM='p2'
+
+ 
+// QUESTION 5 : Give the same query above by using the operator IN. 
+select DISTINCT SName from  s,sp1 
+where PARTNUM in ("p2");
+
+ 
+
+// QUESTION 6 : Get part numbers supplied by more than one supplier. (Hint: It is retrieval with a sub-query, with interblock reference and same table involved in both blocks).
+select a.PARTNUM from sp1 as a, sp1 as b 
+where a.SupplyN<>b.SupplyN group by a.PARTNUM;
+
+ 
+
+// QUESTION 7 : Get supplier numbers for suppliers who are located in the same city as supplier S 1. (Hint: Retrieval with sub query and unqualified comparison operator).
+select b.SupplyN from S as a ,S as b  
+where a.SupplyN="S1" and b.SupplyN<>"S1" and a.city =b.city;
+
+
+// QUESTION 8 : Get supplier names for suppliers who supply part P1. (Hint: Retrieval using EXISTS)
+select S.Sname from S , SP1  
+where sp1.partnum="p1" and SP1.Supplyn=S.Supplyn group by S.Supplyn ;
+
+ 
+// QUESTION 9 : Get part numbers for parts whose quantity is greater than 200 or are currently supplied by S2. (Hint: Use a retrieval using union).
+select Partnum from SP1
+where quantity>200 or supplyn="s2";
+
+ 
+// QUESTION 10 : Suppose for the supplier S5 the value for status is NULL instead of 20. Get supplier numbers for suppliers greater than 25 or is NULL. (Hint: Retrieval using NULL ).
+select S from S where status > 25 or status =NULL;
+
+// QUESTION 11 : Get the number of Suppliers, who are supplying at least one part. (Hint: This query is using the built-in function count).
+select Supplyn from S where status > 25 or status =NULL;
+
+
+ 
+// QUESTION 12: For each part supplied, get the part no. and the total quantity supplied for that part. (Hint: The query using GROUP BY).
+SELECT PARTNUM, SUM(QUANTITY) 
+FROM SP 
+GROUP BY PARTNUM
+
+ 
+// QUESTION 13: Get part numbers for all parts supplied by more than one supplier. (Hint: It is GROUP BY with HAVING).
+
+SELECT PARTNUM
+FROM SP 
+GROUP BY partnum 
+HAVING COUNT (*) > 1
+
+ 
+
+// QUESTION 14 : For all parts such that the total quantity supplied is greater than 300 (exclude from the total all shipments for which quantity is less than or equal to 200), get the part no. and the maximum quantity of the part supplied, and order tlie result by descending part no. within those maximum quantity values which are in ascending order.
+SELECT PARTNUM, MAX(QUANTITY) 
+FROM SP 
+WHERE QUANTITY > 200 
+GROUP BY PARTNUM 
+HAVING SUM(QUANTITY) > 300 
+ORDER BY 2, PARTNUM DESC
+
+ 
+
+// QUESTION 15 : Double the status of all suppliers in London. (Hint: UPDATE Operation).
+update s 
+set status = 4*status 
+where city="london";
+
+ 
+
+// QUESTION 16 : Let us consider the table TEMP has one column, called P#. Enter into TEMP part numbers for all parts supplied by S2.
+CREATING TEMP
+CREATE TABLE TEMP (
+    PARTNUM varchar(255)
+);
+
+// QUERY FOR THE PROBLEM
+INSERT INTO TEMP 
+SELECT PARTNUM
+FROM SP 
+WHERE SupplyN = 'S2' 
+
+ 
+// QUESTION 17 : Add part P7.
+INSERT INTO SP(SupplyN,PARTNUM,QUANTITY) 
+VALUES ('S5','P7', 100) 
+
+ 
+// QUESTION 18 : Delete all the suppliers in London and also the supplies concerned.
+delete from SupplyN where SupplyN in(select SupplyN from s where city='London');
