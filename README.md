@@ -16,9 +16,6 @@ This repository contains projects and code related to Database Management System
    ```
 2. Explore the code and resources in the repository.
 
-## License
-
-This project is licensed under the MIT License.
 
 ---
 Feel free to contribute or raise issues!
