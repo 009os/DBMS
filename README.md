@@ -1,4 +1,4 @@
-# DBMS ()
+# BASIC DBMS (College Assignment)
 
 This repository contains projects and code related to Database Management Systems (DBMS). It includes implementations, assignments, and notes for learning and understanding database concepts.
 
